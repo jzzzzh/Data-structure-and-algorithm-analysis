@@ -17,6 +17,7 @@ public:
 class list
 {
 private:
+// public:
     int nodeNum;
     listNode *head;
     listNode *end;
@@ -27,6 +28,7 @@ public:
     listNode *getEnd();
     listNode *push_end(int tnum);
     int pop_end();
+    listNode *insert(const int i);
     listNode *insertNode(const int i, const int n);
     listNode *deleteNode(const int i);
     void print();
@@ -84,6 +86,17 @@ int list::pop_end()
 }
 listNode *list::insertNode(const int i, const int n) //后插
 {
+    if(n == 0)
+    {
+        listNode* temp = new listNode(i);
+        temp->next = head;
+        head = temp;
+        return head;
+    }
+    if(n == nodeNum)
+    {
+        return push_end(i);
+    }
     if (n > nodeNum)
     {
         return nullptr;
@@ -97,6 +110,36 @@ listNode *list::insertNode(const int i, const int n) //后插
     listNode *in = new listNode(i);
     in->next = x->next;
     x->next = in;
+    return head;
+}
+listNode *list::insert(const int i)
+{
+    if(nodeNum == 0)
+    {
+        push_end(i);
+        return head;
+    }
+    listNode *x = head;
+    listNode *befx = head;
+    int ii = 0;
+    while (x->num < i)
+    {
+        befx = x;
+        x = x->next;
+        ii++;
+    }
+    if (x == head)
+    {
+        insertNode(i, 0);
+    }
+    else if (x == nullptr)
+    {
+        insertNode(i, nodeNum);
+    }
+    else
+    {
+        insertNode(i,ii);
+    }
     return head;
 }
 listNode *list::deleteNode(const int i)
@@ -148,19 +191,21 @@ void list::print()
 int main()
 {
     list test;
-    test.push_end(1);
-    test.push_end(2);
-    test.print();
-    int num = test.pop_end();
-    cout << num << endl << endl;
-    test.print();
-    test.push_end(2);
-    test.push_end(3);
-    test.push_end(4);
-    test.print();
-    test.deleteNode(3);
-    test.print();
-    test.insertNode(1,2);
+    // test.push_end(1);
+    // test.push_end(2);
+    // test.print();
+    // int num = test.pop_end();
+    // cout << num << endl << endl;
+    // test.print();
+    // test.push_end(2);
+    // test.push_end(3);
+    // test.push_end(4);
+    // test.print();
+    // test.deleteNode(3);
+    // test.print();
+    // test.insertNode(3,3);
+    test.insert(3);
+    // cout << test.nodeNum << endl;
     test.print();
     return 0;
 }
