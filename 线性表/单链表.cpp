@@ -1,61 +1,71 @@
 #include <iostream>
 using namespace std;
+template <typename T>
 class listNode
 {
 public:
-    int num;
-    listNode *next;
+    T num;
+    listNode<T> *next;
 
 public:
     listNode();
-    listNode(int tnum, listNode *tnext);
-    listNode(int tnum);
-    int getNum();
-    listNode *getNext();
+    listNode(T tnum, listNode<T> *tnext);
+    listNode(T tnum);
+    T getNum();
+    listNode<T> *getNext();
 };
-
+template <typename T>
 class list
 {
 private:
-// public:
+    // public:
     int nodeNum;
-    listNode *head;
-    listNode *end;
+    listNode<T> *head;
+    listNode<T> *end;
 
 public:
     list();
-    listNode *getHead();
-    listNode *getEnd();
-    listNode *push_end(int tnum);
-    int pop_end();
-    listNode *insert(const int i);
-    listNode *insertNode(const int i, const int n);
-    listNode *deleteNode(const int i);
+    listNode<T> *getHead();
+    listNode<T> *getEnd();
+    listNode<T> *push_end(T tnum);
+    T pop_end();
+    listNode<T> *insert(const T i);
+    listNode<T> *insertNode(const T i, const int n);
+    listNode<T> *deleteNode(const T i);
     void print();
 };
-listNode::listNode() : num(0), next(nullptr) {}
-listNode::listNode(int tnum, listNode *tnext) : num(tnum), next(tnext) {}
-listNode::listNode(int tnum) : num(tnum), next(nullptr) {}
-int listNode::getNum()
+template <typename T>
+listNode<T>::listNode() : num(0), next(nullptr) {}
+template <typename T>
+listNode<T>::listNode(T tnum, listNode *tnext) : num(tnum), next(tnext) {}
+template <typename T>
+listNode<T>::listNode(T tnum) : num(tnum), next(nullptr) {}
+template <typename T>
+T listNode<T>::getNum()
 {
     return num;
 }
-listNode *listNode::getNext()
+template <typename T>
+listNode<T> *listNode<T>::getNext()
 {
     return next;
 }
-list::list() : nodeNum(0), head(nullptr), end(nullptr) {}
-listNode *list::getEnd()
+template <typename T>
+list<T>::list() : nodeNum(0), head(nullptr), end(nullptr) {}
+template <typename T>
+listNode<T> *list<T>::getEnd()
 {
     return end;
 }
-listNode *list::getHead()
+template <typename T>
+listNode<T> *list<T>::getHead()
 {
     return head;
 }
-listNode *list::push_end(int tnum)
+template <typename T>
+listNode<T> *list<T>::push_end(T tnum)
 {
-    listNode *temp = new listNode(tnum);
+    listNode<T> *temp = new listNode<T>(tnum);
     if (nodeNum == 0)
     {
         head = temp;
@@ -70,12 +80,13 @@ listNode *list::push_end(int tnum)
     }
     return head;
 }
-int list::pop_end()
+template <typename T>
+T list<T>::pop_end()
 {
-    listNode *temp = end;
+    listNode<T> *temp = end;
     int ans = temp->num;
-    listNode *x = head;
-    for (int i = 0; i < nodeNum - 2; i++)//这里是-2
+    listNode<T> *x = head;
+    for (int i = 0; i < nodeNum - 2; i++) //这里是-2
     {
         x = x->next;
     }
@@ -84,16 +95,17 @@ int list::pop_end()
     delete temp;
     return ans;
 }
-listNode *list::insertNode(const int i, const int n) //后插
+template <typename T>
+listNode<T> *list<T>::insertNode(const T i, const int n) //后插
 {
-    if(n == 0)
+    if (n == 0)
     {
-        listNode* temp = new listNode(i);
+        listNode<T> *temp = new listNode<T>(i);
         temp->next = head;
         head = temp;
         return head;
     }
-    if(n == nodeNum)
+    if (n == nodeNum)
     {
         return push_end(i);
     }
@@ -101,26 +113,27 @@ listNode *list::insertNode(const int i, const int n) //后插
     {
         return nullptr;
     }
-    listNode *x = head;
+    listNode<T> *x = head;
     for (int i = 0; i < n - 1; i++)
     {
         x = x->next;
     }
     nodeNum++;
-    listNode *in = new listNode(i);
+    listNode<T> *in = new listNode<T>(i);
     in->next = x->next;
     x->next = in;
     return head;
 }
-listNode *list::insert(const int i)
+template <typename T>
+listNode<T> *list<T>::insert(const T i)
 {
-    if(nodeNum == 0)
+    if (nodeNum == 0)
     {
         push_end(i);
         return head;
     }
-    listNode *x = head;
-    listNode *befx = head;
+    listNode<T> *x = head;
+    listNode<T> *befx = head;
     int ii = 0;
     while (x->num < i)
     {
@@ -138,14 +151,15 @@ listNode *list::insert(const int i)
     }
     else
     {
-        insertNode(i,ii);
+        insertNode(i, ii);
     }
     return head;
 }
-listNode *list::deleteNode(const int i)
+template <typename T>
+listNode<T> *list<T>::deleteNode(const T i)
 {
-    listNode *x = head;
-    listNode *befx = head;
+    listNode<T> *x = head;
+    listNode<T> *befx = head;
     while (x->num != i)
     {
         befx = x;
@@ -170,17 +184,19 @@ listNode *list::deleteNode(const int i)
         return head;
     }
 }
-void list::print()
+template <typename T>
+void list<T>::print()
 {
     if (nodeNum != 0)
     {
-        listNode *temp = head;
+        listNode<T> *temp = head;
         while (temp != end)
         {
             cout << temp->num << endl;
             temp = temp->next;
         }
-        cout << temp->num << endl<<endl;
+        cout << temp->num << endl
+             << endl;
         return;
     }
     else
@@ -188,9 +204,47 @@ void list::print()
         cout << "error" << endl;
     }
 }
+template <typename T>
+class stack
+{
+public:
+    list<T> my_stack;
+    void push_back(T i);
+    T pop_back();
+    void print();
+    T get_end();
+};
+
+template <typename T>
+void stack<T>::push_back(T i)
+{
+    my_stack.push_end(i);
+    return;
+}
+
+template <typename T>
+T stack<T>::pop_back()
+{
+    T tmp = my_stack.pop_end();
+    return tmp;
+}
+template <typename T>
+void stack<T>::print()
+{
+    my_stack.print();
+    return;
+}
+
+template <typename T>
+T stack<T>::get_end()
+{
+    T tmp = my_stack.pop_end();
+    my_stack.push_end(tmp);
+    return tmp;
+}
 int main()
 {
-    list test;
+    list<int> test;
     // test.push_end(1);
     // test.push_end(2);
     // test.print();
