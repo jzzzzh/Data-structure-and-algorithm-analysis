@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "xstring": "cpp",
+        "system_error": "cpp",
+        "utility": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp",
+        "vector": "cpp",
+        "xlocale": "cpp",
+        "ostream": "cpp"
+    },
+    "cmake.configureOnOpen": true
+}
