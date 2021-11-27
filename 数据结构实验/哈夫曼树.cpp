@@ -1,5 +1,6 @@
 //by jzh
 //2021.11.25
+//请注意，这里没有delete，可能会造成内存泄漏
 #include <iostream>
 #include <string>
 #include <fstream>
